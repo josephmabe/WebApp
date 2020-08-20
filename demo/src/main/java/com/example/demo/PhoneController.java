@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Map;
@@ -15,15 +15,14 @@ public class PhoneController {
     @Autowired
     PhoneRepository phoneRepository;
 
-    @GetMapping("/phone")
+    @GetMapping("/phones")
     public List<Phone> index(){
         return phoneRepository.findAll();
     }
 
-    @GetMapping("/phone/search")
-    public List<Phone> search(@RequestBody Map<String, String> body){
-        String searchTerm = body.get("text");
-        return phoneRepository.findByMakeContainingOrModelContaining(searchTerm, searchTerm);
+    @GetMapping("/makesAndModels/{searchTerm}")
+    public List<Phone> searchMakesAndModels(@PathVariable String searchTerm){
+        return phoneRepository.findByMakeOrModel(searchTerm);
     }
 
 }
