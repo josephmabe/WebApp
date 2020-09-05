@@ -25,21 +25,11 @@ class DatabaseQuery implements Query{
 
     @Override
     public List<Phone> countRow(String make) {
-        //
-        DataSourceBuilder dsb = DataSourceBuilder.create();
-                dsb = dsb.driverClassName("com.mysql.jdbc.Driver");
-                dsb = dsb.url("jdbc:mysql://localhost:3306/webapp");
-                dsb = dsb.username("root");
-                dsb = dsb.password("password");
 
-        DataSource ds = dsb.build();
 
-        NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(ds);
-        //
-        /*
         JdbcTemplateFactory Factory = new JdbcTemplateFactory();
         NamedParameterJdbcTemplate template = Factory.getTemplate();
-        */
+
         String sql = "select * from Phone where make = :make";
         Map namedParameters = Collections.singletonMap("make", make);
         return template.queryForList(sql, namedParameters);
